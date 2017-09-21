@@ -1,0 +1,7 @@
+<div data-hook="provider-redirect">
+  <h1><%= t(".redirect_to", provider: "SOFORT")%></h1>
+  <%= form_tag solidus_stripe_sources.redirects_path do %>
+    <%= hidden_field_tag :id, @order.number %>
+    <%= submit_tag t(".redirect_now"), method: :post %>
+  <% end %>
+</div>

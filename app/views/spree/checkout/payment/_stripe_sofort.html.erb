@@ -1,0 +1,4 @@
+<%= image_tag "sofort.png" %>
+<% param_prefix = "payment_source[#{payment_method.id}]" %>
+<%= hidden_field_tag "#{param_prefix}[source]", "sofort" %>
+<%= hidden_field_tag "#{param_prefix}[return_url]", solidus_stripe_sources.return_url(@order.number) %>

@@ -1,0 +1,103 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/sources/src_1B4AtTBxRuikat2Vie9Pd6eP
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/3.3.1
+      Authorization:
+      - Bearer sk_test_AsrDm8kqu1cwROiD53jbVaXq
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"3.3.1","lang":"ruby","lang_version":"2.3.4 p301 (2017-03-30)","platform":"x86_64-darwin16","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro.local 16.7.0 Darwin Kernel Version 16.7.0: Thu Jun 15 17:36:27
+        PDT 2017; root:xnu-3789.70.16~2/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro.local"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 21 Sep 2017 12:13:48 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1136'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - X-Stripe-Privileged-Session-Required,stripe-manage-version,X-Stripe-External-Auth-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_g7mtcjQwt5Dn9Q
+      Stripe-Version:
+      - '2017-08-15'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "src_1B4AtTBxRuikat2Vie9Pd6eP",
+          "object": "source",
+          "amount": 2895,
+          "client_secret": "src_client_secret_BR2z2eSovheazQRbkPuBlCL2",
+          "created": 1505924267,
+          "currency": "eur",
+          "flow": "redirect",
+          "livemode": false,
+          "metadata": {
+            "order_id": "R346602670"
+          },
+          "owner": {
+            "address": null,
+            "email": "admin@example.com",
+            "name": "succeeding_charge",
+            "phone": null,
+            "verified_address": null,
+            "verified_email": null,
+            "verified_name": "Jenny Rosen",
+            "verified_phone": null
+          },
+          "redirect": {
+            "return_url": "http://localhost:3000/returns/R346602670",
+            "status": "succeeded",
+            "url": "https://hooks.stripe.com/redirect/authenticate/src_1B4AtTBxRuikat2Vie9Pd6eP?client_secret=src_client_secret_BR2z2eSovheazQRbkPuBlCL2"
+          },
+          "statement_descriptor": "Spree Order ID: R346602670-KRXCF2YM",
+          "status": "consumed",
+          "type": "sofort",
+          "usage": "single_use",
+          "sofort": {
+            "country": "DE",
+            "bank_code": "DEUT",
+            "bank_name": "Deutsche Bank",
+            "bic": "DEUTDE2H",
+            "iban_last4": "4567",
+            "statement_descriptor": null,
+            "preferred_language": null
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 21 Sep 2017 12:13:48 GMT
+recorded_with: VCR 3.0.3

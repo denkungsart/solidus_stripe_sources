@@ -1,0 +1,7 @@
+<div data-hook="provider-return">
+  <h1><%= t(".return_back")%></h1>
+  <%= form_tag spree.order_url(@order), method: :get do %>
+    <%= hidden_field_tag :id, @order.number %>
+    <%= submit_tag t(".return_now") %>
+  <% end %>
+</div>
