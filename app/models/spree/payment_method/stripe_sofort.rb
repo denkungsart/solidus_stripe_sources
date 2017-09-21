@@ -85,7 +85,7 @@ module Spree
         end
       end
 
-      # TODO: sofort_source_updater?
+      # TODO: to make general source / capture update
       def update_source(payment, response)
         new_data = {}.tap do |hsh|
           %w(amount status currency redirect flow sofort client_secret id).each do |key|
