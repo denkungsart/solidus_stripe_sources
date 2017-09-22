@@ -24,6 +24,14 @@ module Spree
       false
     end
 
+    def supported_countries
+      %w(AT BE DE ES IT)
+    end
+
+    def support_country?(country_iso)
+      supported_countries.include?(country_iso)
+    end
+
     def authorize(money, source, gateway_options)
       response = create_source(money, gateway_options)
       update_source(source, response) and response
