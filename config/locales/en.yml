@@ -1,5 +1,7 @@
 ---
 en:
+  spree:
+    order_processing: Your order was received and is awaiting payment confirmation.
   solidus_stripe_sources:
     redirects:
       show:

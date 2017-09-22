@@ -1,11 +1,13 @@
 ---
 de:
+  spree:
+    order_processing: Wir haben Ihre Bestellung erhalten und warten auf die Zahlungsbestätigung.
   solidus_stripe_sources:
     redirects:
       show:
-        redirect_to: Please wait, you will be redirected to %{provider}
-        redirect_now: Redirect now
+        redirect_to: Bitte warten, Sie werden zu %{provider} weitergeleitet
+        redirect_now: Jetzt weiterleiten
     returns:
       show:
-        return_back: Please wait, you will be redirected to back to the shop
-        return_now: Go back now
+        return_back: Bitte waren, Sie werden zurück zum Webshop geleitet
+        return_now: Zurück zum Webshop
