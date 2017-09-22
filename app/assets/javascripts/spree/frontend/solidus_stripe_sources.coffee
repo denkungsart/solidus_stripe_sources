@@ -6,5 +6,5 @@ submitWithTimeout = (selector) ->
 
 Spree.ready ($) ->
   submitWithTimeout(
-    $("[data-hook='provider-return'], [data-hook='provider-redirect'] form")
+    $("[data-hook='provider-return'] form, [data-hook='provider-redirect'] form")
   )
