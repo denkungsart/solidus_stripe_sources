@@ -7,6 +7,10 @@ module SolidusStripeSources
                .find_by(token: params[:source], user_id: @order.user_id)
 
       update_source(source)
+
+      payment = @order.payments.find_by(source: source)
+      invalidate_payment(payment)
+
       set_flash_notice(@order, source)
 
       if @order.payments.all? { |payment| payment_in_final_state?(payment) }
@@ -16,8 +20,12 @@ module SolidusStripeSources
 
     private
 
-    def update_source(payment)
-      SolidusStripeSources::SourceUpdater.new(payment).fetch_and_update
+    def update_source(source)
+      SolidusStripeSources::SourceUpdater.new(source).fetch_and_update
+    end
+
+    def invalidate_payment(payment)
+      SolidusStripeSources::SourceInvalidator.new(payment).process
     end
 
     def set_flash_notice(order, source)

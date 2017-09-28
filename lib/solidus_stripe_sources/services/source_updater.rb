@@ -9,18 +9,20 @@ module SolidusStripeSources
       connection = initialize_connection(source)
       response = connection.query(source.token)
 
-      %i(sofort redirect).each do |key|
+      %i[sofort redirect].each do |key|
         source.data[key] = response[key].to_h if response[key].present?
       end
+      source.data['status'] = response.status
       source.save
     end
 
     private
-      attr_reader :source
 
-      def initialize_connection(source)
-        SolidusStripeSources::StripeConnection
-          .new(source.payment_method.preferences[:secret_key])
-      end
+    attr_reader :source
+
+    def initialize_connection(source)
+      SolidusStripeSources::StripeConnection
+        .new(source.payment_method.preferences[:secret_key])
+    end
   end
 end

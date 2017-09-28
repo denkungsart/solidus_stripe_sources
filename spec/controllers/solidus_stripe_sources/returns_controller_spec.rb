@@ -7,7 +7,10 @@ module SolidusStripeSources
     let(:source) { FactoryGirl.create(:stripe_source, user_id: order.user.id) }
     let(:payment) { FactoryGirl.create(:sofort_payment, source: source) }
 
-    before { order.payments << payment }
+    before do
+      order.payments << payment
+      payment.started_processing!
+    end
 
     describe 'GET #show' do
       before { expect(controller).to receive(:update_source).and_return(true) }
@@ -36,7 +39,10 @@ module SolidusStripeSources
       end
 
       context 'when payment is failed' do
-        before { payment.update_attribute(:state, 'failed') }
+        before do
+          source.data['status'] = 'failed'
+          source.save
+        end
 
         it 'redirects to orders path' do
           get :show, params: { id: order.number, source: payment.source.token }
