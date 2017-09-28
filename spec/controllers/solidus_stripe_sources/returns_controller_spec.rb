@@ -43,7 +43,7 @@ module SolidusStripeSources
 
           expect(response.status).to eq(302)
           expect(controller.flash[:alert])
-            .to eq(Spree.t(:payment_processing_failed))
+            .to eq(Spree.t(:payment_is_cancelled))
         end
       end
     end

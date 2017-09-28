@@ -2,6 +2,7 @@
 de:
   spree:
     payment_is_processing: Wir haben Ihre Bestellung erhalten und warten auf die Zahlungsbestätigung
+    payment_is_cancelled: Der Bezahlvorgang wird abgebrochen
   solidus_stripe_sources:
     redirects:
       show:

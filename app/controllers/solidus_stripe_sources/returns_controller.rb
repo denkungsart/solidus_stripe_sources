@@ -1,4 +1,5 @@
 module SolidusStripeSources
+  # Controller responsible for user redirection after Stripe's redirection
   class ReturnsController < Spree::StoreController
     def show
       @order = Spree::Order.find_by!(number: params[:id])
@@ -29,7 +30,7 @@ module SolidusStripeSources
       when 'completed'
         flash.notice = Spree.t(:order_processed_successfully)
       when 'failed'
-        flash.alert = Spree.t(:payment_processing_failed)
+        flash.alert = Spree.t(:payment_is_cancelled)
       end
     end
 

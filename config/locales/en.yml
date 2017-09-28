@@ -2,6 +2,7 @@
 en:
   spree:
     payment_is_processing: Your order was received and is awaiting payment confirmation
+    payment_is_cancelled: The payment is cancelled
   solidus_stripe_sources:
     redirects:
       show:
