@@ -1,7 +1,7 @@
 ---
 de:
   spree:
-    order_processing: Wir haben Ihre Bestellung erhalten und warten auf die Zahlungsbestätigung.
+    payment_is_processing: Wir haben Ihre Bestellung erhalten und warten auf die Zahlungsbestätigung
   solidus_stripe_sources:
     redirects:
       show:
