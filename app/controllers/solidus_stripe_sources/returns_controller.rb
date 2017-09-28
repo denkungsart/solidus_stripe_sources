@@ -13,7 +13,7 @@ module SolidusStripeSources
 
       set_flash_notice(@order, source)
 
-      if @order.payments.all? { |payment| payment_in_final_state?(payment) }
+      if @order.payments.all? { |payment| payment.final_state? }
         redirect_to spree.order_path(@order)
       end
     end
