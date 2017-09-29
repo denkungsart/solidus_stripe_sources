@@ -47,66 +47,70 @@ module Spree
 
     # Fake charge will move payment to complete
     def capture(*_args)
-      ActiveMerchant::Billing::Response.new(true, "", {}, {})
+      ActiveMerchant::Billing::Response.new(true, '', {}, {})
     end
 
+    # Fake cancel will move order to cancel state
+    def cancel(response); end
+
     private
-      def connection
-        @connection ||= SolidusStripeSources::StripeConnection.new(preferences[:secret_key])
+
+    def connection
+      @connection ||= SolidusStripeSources::StripeConnection.new(preferences[:secret_key])
+    end
+
+    def send_request
+      response = yield
+      StripeResponse.build(response)
+    rescue => e
+      StripeResponse.build_error_response(e.message)
+    end
+
+    def create_source(money, gateway_options)
+      return_url = gateway_options[:originator].source.return_url
+      order = gateway_options[:originator].order
+
+      send_request do
+        connection.create_source(
+          type: 'sofort',
+          amount: money,
+          currency: gateway_options[:currency],
+          owner: {
+            email: gateway_options[:customer],
+            name: gateway_options.dig(:billing_address, :name)
+          },
+          metadata: { order_id: order.number },
+          redirect: { return_url: return_url },
+          sofort: { country: gateway_options.dig(:billing_address, :country) },
+          statement_descriptor: "Spree Order ID: #{gateway_options[:order_id]}"
+        )
       end
+    end
 
-      def send_request
-        response = yield
-        StripeResponse.build(response)
-      rescue => e
-        StripeResponse.build_error_response(e.message)
+    def charge_source(money, token, currency)
+      send_request do
+        connection.charge_source(
+          amount: money,
+          currency: currency,
+          source: token
+        )
       end
+    end
 
-      def create_source(money, gateway_options)
-        return_url = gateway_options[:originator].source.return_url
-        order = gateway_options[:originator].order
-
-        send_request do
-          connection.create_source(
-            type: "sofort",
-            amount: money,
-            currency: gateway_options[:currency],
-            owner: {
-              email: gateway_options[:customer],
-              name: gateway_options.dig(:billing_address, :name)
-            },
-            metadata: { order_id: order.number },
-            redirect: { return_url: return_url },
-            sofort: { country: gateway_options.dig(:billing_address, :country) },
-            statement_descriptor: "Spree Order ID: #{gateway_options[:order_id]}"
-          )
+    # TODO: to make general source / capture update
+    def update_source(payment, response)
+      new_data = {}.tap do |hsh|
+        %w[amount status currency redirect flow sofort client_secret id].each do |key|
+          hsh[key.to_sym] = response.params[key]
         end
       end
 
-      def charge_source(money, token, currency)
-        send_request do
-          connection.charge_source(
-            amount: money,
-            currency: currency,
-            source: token
-          )
-        end
-      end
+      payment.update_attributes(token: new_data[:id], data: new_data)
+    end
 
-      # TODO: to make general source / capture update
-      def update_source(payment, response)
-        new_data = {}.tap do |hsh|
-          %w(amount status currency redirect flow sofort client_secret id).each do |key|
-            hsh[key.to_sym] = response.params[key]
-          end
-        end
-
-        payment.update_attributes(token: new_data[:id], data: new_data)
-      end
-
-      def update_capture(payment, response)
-        payment.data[:capture] = response.params
-        payment.save
-      end
+    def update_capture(payment, response)
+      payment.data[:capture] = response.params
+      payment.save
+    end
   end
 end

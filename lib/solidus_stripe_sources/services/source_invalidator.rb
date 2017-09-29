@@ -7,7 +7,10 @@ module SolidusStripeSources
     end
 
     def process
-      payment.failure! if payment.source.data['status'] == 'failed'
+      if payment.source.data['status'] == 'failed'
+        payment.failure!
+        payment.order.cancel if payment.order.can_cancel?
+      end
     end
   end
 end

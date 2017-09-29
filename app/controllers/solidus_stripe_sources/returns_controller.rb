@@ -6,14 +6,14 @@ module SolidusStripeSources
       source = Spree::StripeSource
                .find_by(token: params[:source], user_id: @order.user_id)
 
-      update_source(source)
-
-      payment = @order.payments.find_by(source: source)
-      invalidate_payment(payment)
+      if update_source(source)
+        payment = @order.payments.find_by(source: source)
+        try_to_invalidate_order(payment)
+      end
 
       set_flash_notice(@order, source)
 
-      if @order.payments.all? { |payment| payment.final_state? }
+      if @order.payments.all?(&:final_state?)
         redirect_to spree.order_path(@order)
       end
     end
@@ -24,7 +24,7 @@ module SolidusStripeSources
       SolidusStripeSources::SourceUpdater.new(source).fetch_and_update
     end
 
-    def invalidate_payment(payment)
+    def try_to_invalidate_order(payment)
       SolidusStripeSources::SourceInvalidator.new(payment).process
     end
 

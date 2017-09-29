@@ -40,6 +40,7 @@ module SolidusStripeSources
 
       context 'when payment is failed' do
         before do
+          order.update_attribute(:state, 'complete')
           source.data['status'] = 'failed'
           source.save
         end
