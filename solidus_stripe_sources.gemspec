@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Evgeny Sugakov"]
   s.email       = ["shiroginne@gmail.com"]
   s.homepage    = "https://github.com/denkungsart/solidus_stripe_sources"
-  s.summary     = "Support for Stripe Sources for Solidus."
-  s.description = "Support for Stripe Sources for Solidus."
+  s.summary     = "Stripe Sources support for Solidus."
+  s.description = "Support Stripe's altrnative payment methods for Solidus: SEPA Direct Debit, Sofort, Alipay ant other."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
