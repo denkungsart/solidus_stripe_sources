@@ -1,3 +1,6 @@
+# NOTE: Fix issue when main app didn't load Webhook class
+require "solidus_stripe_sources/webhook"
+
 module SolidusStripeSources
   class WebhooksController < ApplicationController
     protect_from_forgery except: :stripe
