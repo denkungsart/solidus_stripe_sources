@@ -8,7 +8,8 @@ module SolidusStripeSources
         when "source.failed"
           payment.failure!
         when "source.canceled"
-          payment.invalidate!
+          # NOTE: temporary solution
+          payment.invalidate! if payment.can_invalidate?
         when "source.pending"
           payment.pend!
         end
