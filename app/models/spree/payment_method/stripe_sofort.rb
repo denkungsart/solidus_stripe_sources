@@ -63,6 +63,7 @@ module Spree
       response = yield
       StripeResponse.build(response)
     rescue => e
+      Rails.logger.error(e)
       StripeResponse.build_error_response(e.message)
     end
 
